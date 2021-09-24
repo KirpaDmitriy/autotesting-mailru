@@ -60,3 +60,31 @@ def test_tricky_sort():
         [-190.23, -100, 98, 555, 900, 2343, 6348, 'TEST'].sort()
 
 
+# tests for tuple
+@pytest.fixture
+def empty_tuple():
+    return tuple()
+
+
+@pytest.fixture
+def some_tuple():
+    lst = list()
+    n = random.choice(range(1, 21))
+    for i in range(n):
+        lst.append(random.random() * random.randint(0, 10000))
+    return tuple(lst)
+
+
+def test_empty(empty_list):
+    assert len(empty_list) == 0
+
+
+@pytest.mark.parametrize("test_input,expected", [(tuple(), ()), (tuple([1, 2, -1]), (1, 2, -1)),
+                                                 (tuple(['1', 290, -146.7]), ('1', 290, -146.7))])
+def test_add(test_input, expected):
+    assert test_input == expected
+
+
+def test_change_tuple(some_tuple):
+    with pytest.raises(TypeError):
+        some_tuple[0] = 100
